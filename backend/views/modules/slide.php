@@ -24,7 +24,10 @@ SLIDE ADMINISTRABLE
 <p><span class="fa fa-arrow-down"></span>  Arrastra aquí tu imagen, tamaño recomendado: 1600px * 600px, peso maximo 2,5 MB</p>
 	
 	<ul id="columnasSlide" draggable="true">
-		
+		<?php 
+			$slide = new GestorSlideController();
+			$slide -> mostrarImagenesSlideController();
+		?>
 	</ul>
 
 	<button id="ordenarSlide" class="btn btn-warning pull-right" style="margin:10px 30px">Ordenar Slides</button>
@@ -40,6 +43,11 @@ SLIDE ADMINISTRABLE
 <hr>
 	
 	<ul id="ordenarTextSlide">
+
+		<?php 
+			$slide = new GestorSlideController();
+			$slide -> editorSlideController();
+		?>
 		<!-- <li>
 			<span class="fa fa-pencil" style="background:blue"></span>
 			<img src="views/images/slide/slide01.jpg" style="float:left; margin-bottom:10px" width="80%">

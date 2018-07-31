@@ -87,8 +87,9 @@ $('#columnasSlide').on("drop", function (e) {
             if ( res === "0" ) {
                 $('#columnasSlide').before('<div class="alert alert-warning"> La imagen es inferior a 1600 x 600 </div>');
             } else {
-                $('#columnasSlide').append('<li class="bloqueSlide"><span class="fa fa-times"></span><img src="'+res.ruta.slice(6)+'" class="handleImg"></li>');
+                $('#columnasSlide').append('<li class="bloqueSlide"><span class="fa fa-times"></span><img src="'+res.ruta+'" class="handleImg"></li>');
                 $('#columnasSlide').css({"height": "auto"});
+                $('#ordenarTextSlide').append('<li><span class="fa fa-pencil" style="background:blue"></span><img src="'+res.ruta+'" style="float:left; margin-bottom:10px" width="80%"><h1>'+res.title+'</h1><p>'+res.descripcion+'</p></li>')
             }
         }
     });
