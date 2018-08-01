@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="views/css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="views/css/responsive.bootstrap.min.css">
 	<link rel="stylesheet" href="views/css/jquery-ui.min.css">
-	<link rel="stylesheet" href="views/css/sweetalert.css">
+	<!-- <link rel="stylesheet" href="views/css/sweetalert.css"> -->
 	<link rel="stylesheet" href="views/css/cssFancybox/jquery.fancybox.css">
 	<link rel="stylesheet" href="views/css/jquery-ui.min.css">
 
@@ -27,7 +27,9 @@
 	<script src="views/js/dataTables.responsive.min.js"></script>
 	<script src="views/js/responsive.bootstrap.min.js"></script>
 	<script src="views/js/jquery-ui.min.js"></script>
-	<script src="views/js/sweetalert.min.js"></script>
+	<!-- <script src="views/js/sweetalert.min.js"></script> -->
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.9/dist/sweetalert2.all.min.js"></script>
 
 </head>
 

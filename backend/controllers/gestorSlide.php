@@ -22,13 +22,17 @@ class gestorSlideController {
                 case 'jpg':
                 case 'jpeg':
                     $origin = imagecreatefromjpeg($temp);
-                    imagejpeg($origin, $rutaCrear);
+                    $imagen = imagecrop($origin, ["x" => 0, "y" => 0, "width" => 1600, "height" => 600 ]);
+                    imagejpeg($imagen , $rutaCrear);
                     break; 
                 case 'png': 
-                    $origin = imageCreateFromPng($temp); 
-                    imagepng($origin, $rutaCrear);
+                    $origin = imageCreateFromPng($temp);
+                    $imagen = imagecrop($origin, ["x" => 0, "y" => 0, "width" => 1600, "height" => 600 ]);
+                    imagepng($imagen, $rutaCrear);
                     break;
             }
+
+            
 
             // echo json_encode(array("type" => $type, "temp" => $temp, "ruta" => $ruta));
 
@@ -36,7 +40,7 @@ class gestorSlideController {
 
             $res = GestorSlideModel::mostrarImagenSlideModel($rutaAcceso, "slide");
 
-            $datosRepuesta = array("ruta" => $res["ruta"]);
+            $datosRepuesta = array("ruta" => $res["ruta"], "titulo" => $res["titulo"], "descripcion" => $res["descripcion"]);
 
             echo json_encode($datosRepuesta);
             
@@ -50,7 +54,7 @@ class gestorSlideController {
         $res = GestorSlideModel::mostrarImagenesSlideModel("slide");
         
         foreach ($res as $row => $item) {
-            echo '<li class="bloqueSlide"><span class="fa fa-times"></span><img src="'.$item["ruta"].'" class="handleImg"></li>';
+            echo '<li id="'.$item["id"].'" class="bloqueSlide"><span class="fa fa-times eliminar-slide"></span><img src="'.$item["ruta"].'" class="handleImg"></li>';
         }
     }
 
@@ -60,13 +64,24 @@ class gestorSlideController {
         $res = GestorSlideModel::mostrarImagenesSlideModel("slide");
         
         foreach ($res as $row => $item) {
-            echo '<li>
+            echo '<li id="'.$item["id"].'">
 			<span class="fa fa-pencil" style="background:blue"></span>
 			<img src="'.$item["ruta"].'" style="float:left; margin-bottom:10px" width="80%">
 			<h1>'.$item["title"].'</h1>
 			<p>'.$item["descripcion"].'</p>
 		    </li>';
         }
+    }
+
+    ## ELIMINAR IMAGEN 
+    ##----------------------------------------------------------------
+    public function eliminarSlideController ($datos) {
+
+        $res = GestorSlideModel::eliminarSlideController($datos["id"], "slide");
+
+        unlink($datos["ruta"]);
+        
+        echo $res;
     }
     
 }

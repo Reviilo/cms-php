@@ -25,7 +25,7 @@ class GestorSlideModel {
     ## SELECCIONAR LA RUTA DE LA IMAGEN
     ##----------------------------------------------------------------
     public function mostrarImagenSlideModel ($ruta, $tabla) {
-        $stmt = Conexion::conectar()->prepare("SELECT ruta, titulo, descripcion FROM $tabla WHERE ruta = :ruta");
+        $stmt = Conexion::conectar()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla WHERE ruta = :ruta");
 
         $stmt -> bindParam(":ruta", $ruta, PDO::PARAM_STR);
         $stmt -> execute();
@@ -36,9 +36,26 @@ class GestorSlideModel {
     ## SELECCIONAR LAS IMAGENES CARGADAS
     ##----------------------------------------------------------------
     public function mostrarImagenesSlideModel ($tabla) {
-        $stmt = Conexion::conectar()->prepare("SELECT ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC");
+        $stmt = Conexion::conectar()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla ORDER BY orden ASC");
         $stmt -> execute();
         return $stmt -> fetchAll();
+        $stmt -> close();
+    }
+
+    ## ELIMINAR IMAGEN 
+    ##----------------------------------------------------------------
+    public function eliminarSlideController ($id, $tabla) {
+
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+        $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+        if ($stmt -> execute()) {
+            return "success";
+        } else {
+            return "error";
+        }
+
         $stmt -> close();
     }
 }
