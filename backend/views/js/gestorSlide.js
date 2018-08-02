@@ -50,10 +50,8 @@ $('#columnasSlide').on("drop", function (e) {
         
         return;
     }
-
-    if ( imgType === "image/jpeg" || "image/jpg" || "image/png") {
-        $(".alert").remove();
-    } else {
+    console.log(imgType !== "image/png");
+    if ( imgType !== "image/png" && imgType !== "image/jpeg" && imgType !== "image/jpg") {
         if ( $(".alert").length > 0 ) {
             return;
         }
@@ -83,16 +81,23 @@ $('#columnasSlide').on("drop", function (e) {
         },
         success: function (res) {
 
-            // console.log(res.ruta.slice(6));
+            console.log(res);
             $('.status').remove();
             $('#columnasSlide').css({"height": "auto"});
 
-            if ( res === "0" ) {
+            if ( Number(res) === 0 ) {
                 $('#columnasSlide').before('<div class="alert alert-warning"> La imagen es inferior a 1600 x 600 </div>');
+
+                setTimeout(function () {
+                    $(".alert").remove();
+                }, 5000);
+                
+                return;
+                
             } else {
                 $('#columnasSlide').append('<li id="'+res.id+'" class="bloqueSlide"><span class="fa fa-times eliminar-slide"></span><img src="'+res.ruta+'" class="handleImg"></li>');
                 $('#columnasSlide').css({"height": "auto"});
-                $('#ordenarTextSlide').append('<li id="'+res.id+'"><span class="fa fa-pencil" style="background:blue"></span><img src="'+res.ruta+'" style="float:left; margin-bottom:10px" width="80%"><h1>'+res.titulo+'</h1><p>'+res.descripcion+'</p></li>')
+                $('#ordenarTextSlide').append('<li id="'+res.id+'"><span class="fa fa-pencil editar-slide" style="background:blue"></span><img src="'+res.ruta+'" style="float:left; margin-bottom:10px" width="80%"><h1>'+res.titulo+'</h1><p>'+res.descripcion+'</p></li>')
 
                 swal({
                     title: "OK!",
@@ -113,7 +118,7 @@ $('#columnasSlide').on("drop", function (e) {
  * Eliminar una imagen
  */
 
-$('.eliminar-slide').click(function () {
+$('.eliminar-slide').on('click', function () {
     var idSlide = $(this).parent().attr("id");
     var ruta = $(this).parent().children("img").attr("src");
 
@@ -142,10 +147,9 @@ $('.eliminar-slide').click(function () {
                     $('#'+idSlide).remove();
 
                     var datos = new FormData();
+                    datos.append("actividad", "eliminar");
                     datos.append("id", idSlide);
                     datos.append("ruta", ruta);
-
-                    
 
                     $.ajax({
                         url: "views/ajax/gestorSlide.php",
@@ -170,3 +174,191 @@ $('.eliminar-slide').click(function () {
     });
 
 });
+
+/**
+ * Editar una imagen del slide
+ */
+
+$('.editar-slide').on('click', function() {
+    var id = $(this).parent().attr('id'),
+        ruta = $(this).parent().children("img").attr("src"),
+        titulo = $(this).parent().children("h1").html(),
+        descripcion = $(this).parent().children("p").html();
+    
+    $(this).parent().html('<img src="'+ruta+'" class="img-thumbnail"> <input type="text" class="form-control" placeholder="Título" value="'+titulo+'" /> <textarea row="5" class="form-control" placeholder="Descripción">'+descripcion+'</textarea> <button class="btn btn-info pull-right guardar" style="margin:10px">Guardar</button>');
+
+    /** Guardar la edicion de la imagen del slide */
+
+    $('.guardar').on('click', function () {
+        var id = $(this).parent().attr('id'),
+            ruta = $(this).parent().children("img").attr("src"),
+            titulo = $(this).parent().children("input").val(),
+            descripcion = $(this).parent().children("textarea").val(),
+            datos = new FormData();
+
+            datos.append("actividad", "actualizar");
+            datos.append("id", id);
+            datos.append("ruta", ruta);
+            datos.append("titulo", titulo);
+            datos.append("descripcion", descripcion);
+
+            $.ajax({
+                url: "views/ajax/gestorSlide.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    swal({
+                        title: "OK!",
+                        text: "La imagen se actualizo correctamente",
+                        type: "success",
+                        timer: 2000,
+                        onClose: () => {
+                            window.location = "slide";
+                        }
+                    });
+                }
+            });
+
+        
+    });
+    
+});
+
+/**
+ * Editar una imagen del slide
+ */
+
+$('#ordenarSlide').on('click', function () {
+    var almacenarOrdenId = [];
+    var ordenItem = [];
+    
+    $('#ordenarSlide').hide();
+    $('#guardarSlide').show();
+
+    $('#columnasSlide').css({'cursor': 'move'});
+    $('#columnasSlide span').hide();
+
+    $('#columnasSlide').sortable({
+        revert: true,
+        connectWith: '.bloqueSlide',
+        handle: '.handleImg',
+        stop: function (e) {
+            for(var i=0; i < $('#columnasSlide li').length; i++) {
+                almacenarOrdenId[i] = e.target.children[i].id;
+                ordenItem[i] = i+1;
+                console.log('** almacenarOrdenId[i] **', almacenarOrdenId[i]);
+                console.log('** ordenItem[i] **', ordenItem[i]);
+
+                var datos = new FormData();
+                datos.append('actividad', "ordenar");
+                datos.append('id', almacenarOrdenId[i]);
+                datos.append('orden', ordenItem[i]);
+
+                $.ajax({
+                    url: 'views/ajax/gestorSlide.php',
+                    method: 'POST',
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(res) {
+                        console.log(res);
+                    }
+                });
+            }
+        }
+    });
+
+});
+
+$('#guardarSlide').on('click', function () {
+    $('#ordenarSlide').show();
+    $('#guardarSlide').hide();
+
+    for(var i=0; i < $('#columnasSlide li').length; i++) {
+        var datos = new FormData();
+        datos.append('id', almacenarOrdenId[i]);
+        datos.append('orden', ordenItem[i]);
+
+        $.ajax({
+            url: 'views/ajax/gesetorSlide.php',
+            method: 'POST',
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(res) {
+
+            }
+        });
+    }
+});
+
+/*=============================================
+ORDENAR SLIDE     
+=============================================*/
+
+// /* Ordenar Slide */
+// var almacenarOrdenImagen = new Array();
+// var cambioOrdenImagen = false;
+
+// $("#ordenarSlide").click(function(){
+
+// 	$( "#columnasSlide").css({"cursor":"move"});
+// 	$( "#columnasSlide span").hide();
+
+	
+		 
+// 	$( "#columnasSlide").sortable({
+//       	revert: true,
+//       	connectWith: ".bloqueSlide",
+//       	handle: ".handleImg",	
+//       	stop: function( event, ui ) {
+
+//       	cambioOrdenImagen = true;
+
+//       	for(var i= 0; i < $( "#columnasSlide li").length; i++){
+
+// 			  almacenarOrdenImagen[i] = event.target.children[i].children[1].src;
+// 			  console.log('** event **', event);
+// 			  console.log('** almacenarOrdenImagen[i] **', almacenarOrdenImagen[i]);
+      		
+//       		}
+//       	}
+//     })
+
+//     $("#ordenarSlide").hide();
+//     $("#guardarSlide").show();
+
+// })
+
+// /* Guardar Orden Slide */ 
+
+// $("#guardarSlide").click(function(){
+
+// 	if(cambioOrdenImagen){
+
+// 		$("#textoSlide ul").html("")
+
+// 		for(var i= 0; i < $( "#columnasSlide li").length; i++){
+
+// 	      	$("#textoSlide ul").append('<li><span class="fa fa-pencil" style="background:blue"></span><img src="'+almacenarOrdenImagen[i]+'" style="float:left; margin-bottom:10px" width="80%"><h1></h1><p></p></li>')
+// 	      	}
+//      }
+
+// 	$("#columnasSlide").css({"cursor":"auto"})
+// 	$("#columnasSlide span").show()
+
+// 	$("#columnasSlide").disableSelection();
+
+// 	$("#ordenarSlide").show();
+
+// 	$("#guardarSlide").hide();
+
+// })
+
+
+// /*=====  Fin de ORDENAR SLIDE   ======*/

@@ -65,9 +65,9 @@ class gestorSlideController {
         
         foreach ($res as $row => $item) {
             echo '<li id="'.$item["id"].'">
-			<span class="fa fa-pencil" style="background:blue"></span>
+			<span class="fa fa-pencil editar-slide" style="background:blue"></span>
 			<img src="'.$item["ruta"].'" style="float:left; margin-bottom:10px" width="80%">
-			<h1>'.$item["title"].'</h1>
+			<h1>'.$item["titulo"].'</h1>
 			<p>'.$item["descripcion"].'</p>
 		    </li>';
         }
@@ -77,9 +77,27 @@ class gestorSlideController {
     ##----------------------------------------------------------------
     public function eliminarSlideController ($datos) {
 
-        $res = GestorSlideModel::eliminarSlideController($datos["id"], "slide");
+        $res = GestorSlideModel::eliminarSlideModel($datos["id"], "slide");
 
         unlink($datos["ruta"]);
+        
+        echo $res;
+    }
+
+    ## ACTUALIZAR IMAGEN 
+    ##----------------------------------------------------------------
+    public function actualizarSlideController ($datos) {
+
+        $res = GestorSlideModel::actualizarSlideModel($datos, "slide");
+        
+        echo $res;
+    }
+
+    ## ACTUALIZAR ORDEN IMAGEN 
+    ##----------------------------------------------------------------
+    public function ordenarSlideController ($datos) {
+
+        $res = GestorSlideModel::ordenarSlideModel($datos, "slide");
         
         echo $res;
     }
