@@ -54,7 +54,10 @@ class gestorSlideController {
         $res = GestorSlideModel::mostrarImagenesSlideModel("slide");
         
         foreach ($res as $row => $item) {
-            echo '<li id="'.$item["id"].'" class="bloqueSlide"><span class="fa fa-times eliminar-slide"></span><img src="'.$item["ruta"].'" class="handleImg"></li>';
+            echo '<li id="'.$item["id"].'" class="bloqueSlide">
+            <span class="fa fa-times eliminar-slide"></span>
+            <img src="'.$item["ruta"].'" class="handleImg">
+            </li>';
         }
     }
 

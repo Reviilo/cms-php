@@ -25,7 +25,7 @@ $('#columnasSlide').on("dragover", function (e) {
  * Ajustar el espacio de arrastre 
  */
 
-$('#columnasSlide').on("drop", function (e) {
+$('#columnasSlide').on("drop.ar", function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -231,12 +231,9 @@ $('.editar-slide').on('click', function() {
  * Editar una imagen del slide
  */
 
-$('#ordenarSlide').on('click', function () {
+function sortableOn () {
     var almacenarOrdenId = [];
     var ordenItem = [];
-    
-    $('#ordenarSlide').hide();
-    $('#guardarSlide').show();
 
     $('#columnasSlide').css({'cursor': 'move'});
     $('#columnasSlide span').hide();
@@ -271,94 +268,21 @@ $('#ordenarSlide').on('click', function () {
             }
         }
     });
+}
 
+/**
+ * Permitir arrastrar los elementos
+ */
+
+$('#columnasSlide').on("mouseover", function (e) {
+    console.log('** mouseover **', e);
+    sortableOn();
 });
 
-$('#guardarSlide').on('click', function () {
-    $('#ordenarSlide').show();
-    $('#guardarSlide').hide();
+$('#columnasSlide').on("mouseout", function (e) {
+    console.log('** mouseout **', e);
 
-    for(var i=0; i < $('#columnasSlide li').length; i++) {
-        var datos = new FormData();
-        datos.append('id', almacenarOrdenId[i]);
-        datos.append('orden', ordenItem[i]);
+    $('#columnasSlide').css({'cursor': 'pointer'});
+    $('#columnasSlide span').show();
 
-        $.ajax({
-            url: 'views/ajax/gesetorSlide.php',
-            method: 'POST',
-            data: datos,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(res) {
-
-            }
-        });
-    }
 });
-
-/*=============================================
-ORDENAR SLIDE     
-=============================================*/
-
-// /* Ordenar Slide */
-// var almacenarOrdenImagen = new Array();
-// var cambioOrdenImagen = false;
-
-// $("#ordenarSlide").click(function(){
-
-// 	$( "#columnasSlide").css({"cursor":"move"});
-// 	$( "#columnasSlide span").hide();
-
-	
-		 
-// 	$( "#columnasSlide").sortable({
-//       	revert: true,
-//       	connectWith: ".bloqueSlide",
-//       	handle: ".handleImg",	
-//       	stop: function( event, ui ) {
-
-//       	cambioOrdenImagen = true;
-
-//       	for(var i= 0; i < $( "#columnasSlide li").length; i++){
-
-// 			  almacenarOrdenImagen[i] = event.target.children[i].children[1].src;
-// 			  console.log('** event **', event);
-// 			  console.log('** almacenarOrdenImagen[i] **', almacenarOrdenImagen[i]);
-      		
-//       		}
-//       	}
-//     })
-
-//     $("#ordenarSlide").hide();
-//     $("#guardarSlide").show();
-
-// })
-
-// /* Guardar Orden Slide */ 
-
-// $("#guardarSlide").click(function(){
-
-// 	if(cambioOrdenImagen){
-
-// 		$("#textoSlide ul").html("")
-
-// 		for(var i= 0; i < $( "#columnasSlide li").length; i++){
-
-// 	      	$("#textoSlide ul").append('<li><span class="fa fa-pencil" style="background:blue"></span><img src="'+almacenarOrdenImagen[i]+'" style="float:left; margin-bottom:10px" width="80%"><h1></h1><p></p></li>')
-// 	      	}
-//      }
-
-// 	$("#columnasSlide").css({"cursor":"auto"})
-// 	$("#columnasSlide span").show()
-
-// 	$("#columnasSlide").disableSelection();
-
-// 	$("#ordenarSlide").show();
-
-// 	$("#guardarSlide").hide();
-
-// })
-
-
-// /*=====  Fin de ORDENAR SLIDE   ======*/
