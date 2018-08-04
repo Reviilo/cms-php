@@ -104,5 +104,22 @@ class gestorSlideController {
         
         echo $res;
     }
+
+    ## VISUALIZAR SLIDE
+    ##----------------------------------------------------------------
+    public function visualizarSlideController () {
+
+        $res = GestorSlideModel::mostrarImagenesSlideModel("slide");
+        
+        foreach ($res as $row => $item) {
+            echo '<li>
+                    <img src="'.$item["ruta"].'">
+                    <div class="slideCaption">
+                        <h3>'.$item["titulo"].'</h3>
+                        <p>'.$item["descripcion"].'</p>
+                    </div>
+                </li>';
+        }
+    }
     
 }

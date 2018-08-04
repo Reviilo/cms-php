@@ -5,6 +5,10 @@ var numeroSlide = 1;
 var formatearLoop = false;
 var cantidadImg = $("#slide ul li").length;
 
+for(var i=0; i < cantidadImg; i++) {
+	$('#indicadores').append('<li role-slide = "'+(i+1)+'"><span class="fa fa-circle"></span></li>');
+}
+
 $("#slide ul").css({"width": (cantidadImg*100) + "%"})
 $("#slide ul li").css({"width": (100/cantidadImg) + "%"})
 

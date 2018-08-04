@@ -9,4 +9,8 @@ class Conexion {
 
 	}
 
+	public function mensaje () {
+		return 'si se hace la conexion';
+	}
+
 }

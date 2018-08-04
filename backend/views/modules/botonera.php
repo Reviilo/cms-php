@@ -44,6 +44,8 @@ COLUMNA BOTONERA
 
 		</nav>
 
+		<a href="../index.php" class="btn btn-primary "> Ver sitio</a>
+
 	</div>
 
 <!--====  FIn de COLUMNA BOTONERA  ====-->

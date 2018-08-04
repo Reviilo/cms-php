@@ -236,13 +236,16 @@ function sortableOn () {
     var ordenItem = [];
 
     $('#columnasSlide').css({'cursor': 'move'});
-    $('#columnasSlide span').hide();
 
     $('#columnasSlide').sortable({
         revert: true,
         connectWith: '.bloqueSlide',
         handle: '.handleImg',
+        activate: function () {
+            $('#columnasSlide span').hide();
+        },
         stop: function (e) {
+            // $('#columnasSlide span').show();
             for(var i=0; i < $('#columnasSlide li').length; i++) {
                 almacenarOrdenId[i] = e.target.children[i].id;
                 ordenItem[i] = i+1;
@@ -270,17 +273,19 @@ function sortableOn () {
     });
 }
 
+$('#columnasSlide span').on('mouseover', function () {
+    $('#columnasSlide').css({'cursor': 'pointer'});
+});
+
 /**
  * Permitir arrastrar los elementos
  */
 
 $('#columnasSlide').on("mouseover", function (e) {
-    console.log('** mouseover **', e);
     sortableOn();
 });
 
 $('#columnasSlide').on("mouseout", function (e) {
-    console.log('** mouseout **', e);
 
     $('#columnasSlide').css({'cursor': 'pointer'});
     $('#columnasSlide span').show();
