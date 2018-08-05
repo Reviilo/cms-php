@@ -75,6 +75,63 @@
             }
         }
     });
+});
 
 
- });
+/**
+ * Eliminar una imagen
+ */
+
+// $('.eliminar-articulo').on('click', function () {
+//     var id = $(this).parents('li').attr("id");
+//     var ruta = $(this).parents('li').children("img").attr("src");
+
+//     const swalWithBootstrapButtons = swal.mixin({
+//         confirmButtonClass: 'btn btn-success',
+//         cancelButtonClass: 'btn btn-danger',
+//         buttonsStyling: false,
+//     });
+      
+//     swalWithBootstrapButtons({
+//         title: 'Esta seguro?',
+//         text: "Usted no puede devolver el cambio!",
+//         type: 'warning',
+//         showCancelButton: true,
+//         confirmButtonText: 'Si, eliminar!',
+//         cancelButtonText: 'No, cancelar!',
+//         reverseButtons: true
+//     }).then((result) => {
+//         if (result.value) {
+//             swalWithBootstrapButtons(
+//                 'Eliminado!',
+//                 'Su archivo ha sido eliminado.',
+//                 'success');
+
+//             $(this).parents('li').siblings()[0].remove();
+//             $(this).parents('li').remove();
+
+//             var datos = new FormData();
+//             datos.append("actividad", "eliminar");
+//             datos.append("id", id);
+//             datos.append("ruta", ruta);
+
+//             $.ajax({
+//                 url: "views/ajax/gestorArticulos.php",
+//                 method: "POST",
+//                 data: datos,
+//                 cache: false,
+//                 contentType: false,
+//                 processData: false,
+//                 success: function (res) {
+//                     console.log(res);
+//                 }
+//             });
+//         } else if (result.dismiss === swal.DismissReason.cancel) {
+//             swalWithBootstrapButtons(
+//                 'Cancelled',
+//                 'Your imaginary file is safe :)',
+//                 'error');
+//         }
+//     });
+
+// });

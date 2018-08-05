@@ -30,7 +30,6 @@ class Ajax {
     }
 
     ## Enviar datos de la imagen al controlador
-    
     public function eliminarSlideAjax() {
 
         $datos = array("id" => $this->idSlide, "ruta" => $this->rutaSlide );
