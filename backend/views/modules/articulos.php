@@ -20,29 +20,39 @@ ARTÍCULOS ADMINISTRABLE
 
 <div id="seccionArticulos" class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
 	
-	<button class="btn btn-info btn-lg">Agregar Artículo</button>
+	<button class="btn btn-info btn-lg btn-agregar">Agregar Artículo</button>
 
 	<!--==== AGREGAR ARTÍCULO  ====-->
 
 	<div id="agregarArtículo">
+
+		<form method="post" enctype="multipart/form-data" >
 		
-		<input type="text" placeholder="Título del Artículo" class="form-control">
+			<input name="titulo" type="text" placeholder="Título del Artículo" class="form-control" required>
 
-		<textarea name="" id="" cols="30" rows="5" placeholder="Introducción del Articulo" class="form-control"></textarea>
+			<textarea name="introduccion" cols="30" rows="5" placeholder="Introducción del Articulo" class="form-control" maxlength="200" required></textarea>
 
-		<input type="file" name="imagen" class="btn btn-default" id="subirFoto" required>
+			<input type="file" name="imagen" class="btn btn-default" id="subirFoto" required>
 
-		<p>Tamaño recomendado: 800px * 400px, peso máximo 2MB</p>
+			<p>Tamaño recomendado: 800px * 400px, peso máximo 2MB</p>
 
-		<div id="arrastreImagenArticulo">	
-			<div id="imagenArticulo"><img src="views/images/articulos/landscape01.jpg" class="img-thumbnail"></div>
-		</div>
+			<div id="arrastreImagenArticulo">	
+				<div id="imagenArticulo"></div>
+			</div>
 
-		<textarea name="" id="" cols="30" rows="10" placeholder="Contenido del Articulo" class="form-control"></textarea>
+			<textarea name="contenido" cols="30" rows="10" placeholder="Contenido del Articulo" class="form-control" required></textarea>
 
-		<button id="guardarArticulo" class="btn btn-primary">Guardar Artículo</button>
+			<input type="submit" id="guardarArticulo" class="btn btn-primary" value="Guardar Artículo">
+
+		</form>
 
 	</div>
+
+	
+	<?php 
+		$art = new GestorArticulosController();
+		$art -> guardarArticuloController();
+	?>
 
 	<hr>
 
@@ -50,7 +60,7 @@ ARTÍCULOS ADMINISTRABLE
 
 	<ul id="editarArticulo">
 
-		<li>
+		<!-- <li>
 			<span>
 			<i class="fa fa-times btn btn-danger"></i>
 			<i class="fa fa-pencil btn btn-primary"></i>	
@@ -81,7 +91,7 @@ ARTÍCULOS ADMINISTRABLE
 			
 			<hr>
 
-		</li>
+		</li> -->
 
 	</ul>
 

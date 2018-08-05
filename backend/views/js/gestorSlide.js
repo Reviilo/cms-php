@@ -50,7 +50,7 @@ $('#columnasSlide').on("drop.ar", function (e) {
         
         return;
     }
-    console.log(imgType !== "image/png");
+
     if ( imgType !== "image/png" && imgType !== "image/jpeg" && imgType !== "image/jpg") {
         if ( $(".alert").length > 0 ) {
             return;
@@ -80,8 +80,6 @@ $('#columnasSlide').on("drop.ar", function (e) {
             $('#columnasSlide').before('<img src="views/images/status.gif" id="status" class="status">');
         },
         success: function (res) {
-
-            console.log(res);
             $('.status').remove();
             $('#columnasSlide').css({"height": "auto"});
 
@@ -159,7 +157,7 @@ $('.eliminar-slide').on('click', function () {
                         contentType: false,
                         processData: false,
                         success: function (res) {
-                            console.log(res);
+
                             if ( $('#columnasSlide').html().trim() == 0 ) {
                                 $('#columnasSlide').css({"height": "100px"});
                             }
@@ -249,8 +247,6 @@ function sortableOn () {
             for(var i=0; i < $('#columnasSlide li').length; i++) {
                 almacenarOrdenId[i] = e.target.children[i].id;
                 ordenItem[i] = i+1;
-                console.log('** almacenarOrdenId[i] **', almacenarOrdenId[i]);
-                console.log('** ordenItem[i] **', ordenItem[i]);
 
                 var datos = new FormData();
                 datos.append('actividad', "ordenar");
@@ -263,10 +259,7 @@ function sortableOn () {
                     data: datos,
                     cache: false,
                     contentType: false,
-                    processData: false,
-                    success: function(res) {
-                        console.log(res);
-                    }
+                    processData: false
                 });
             }
         }
