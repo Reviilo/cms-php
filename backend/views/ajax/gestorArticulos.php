@@ -1,5 +1,6 @@
 <?php
 
+require_once "../../models/gestorArticulos.php";
 require_once "../../controllers/gestorArticulos.php";
 
 ## CLASE Y MÉTODOS
@@ -9,6 +10,7 @@ class Ajax {
     public $imgType;
     public $id;
     public $ruta;
+    public $orden;
 
     ## Enviar datos de la imagen al controlador
     public function gestorArticuloAjax () {
@@ -32,6 +34,17 @@ class Ajax {
 
         echo $res;
     }
+
+    ## Orden del articulo
+    public function actualizarOrdenArticuloAjax() {
+
+        $datos = array("id" => $this->id, "orden" => $this->orden );
+
+        $res = GestorArticulosController::actualizarOrdenArticuloController($datos);
+
+        echo $res;
+
+    }
 }
 
 ## OBJETOS
@@ -44,24 +57,12 @@ if (isset( $_FILES["img"] ) ) {
     $a -> gestorArticuloAjax();
 }
 
-if ( isset( $_POST["actividad"]) ) {
-    $actividad = $_POST["actividad"];
-    if ($actividad === "eliminar") {
-        $b = new Ajax();
-        $b -> id = $_POST["id"];
-        $b -> ruta = "../../".$_POST["ruta"];
-        $b -> eliminarArticuloAjax();
-    } else if ($actividad === "actualizar") {
-        $c = new Ajax();
-        $c -> idSlide = $_POST["id"];
-        $c -> tituloSlide = $_POST["titulo"];
-        $c -> descripcionSlide = $_POST["descripcion"];
-        $c -> actualizarImagenSlideAjax();
-    } else if ($actividad === "ordenar") {
+if ( isset( $_POST["accion"]) ) {
+    $accion = $_POST["accion"];
+    if ($accion === "ordenar") {
         $d = new Ajax();
-        $d -> idSlide = $_POST["id"];
-        $d -> ordenSlide = $_POST["orden"];
-        $d -> actualizarOrdenSlideAjax();
+        $d -> id = $_POST["id"];
+        $d -> orden = $_POST["orden"];
+        $d -> actualizarOrdenArticuloAjax();
     }
-    
 }

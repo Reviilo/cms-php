@@ -355,6 +355,7 @@ ARTICULOS
 	text-align:justify;
 }
 
+
 /*=====  Fin de ARTICULOS ======*/
 
 /*=============================================
@@ -555,8 +556,8 @@ ESCRITORIO GRANDE
 	}
 
 	#cabezote img{
-		width:40px;
-		height:40px;
+		/* width:40px;
+		height:40px; */
 	    display:inline;
 		margin:5px;
 	}
@@ -662,8 +663,8 @@ ESCRITORIO GRANDE
 		margin:20px 20px 0 0 ;
 	}
 
-	#editarArticulo input{
-		margin:10px;
+	#editarArticulo .titulo {
+		margin: 10px;
 		padding:10px;
 		width:75%;
 	}
@@ -786,9 +787,9 @@ ESCRITORIO MEDIANO
 		border-radius: 100%;
 	}
 
-	#cabezote img{
-		width:40px;
-		height:40px;
+	#cabezote img {
+		/* width:40px;
+		height:40px; */
 	    display:inline;
 		margin:5px;
 	}
@@ -894,8 +895,8 @@ ESCRITORIO MEDIANO
 		margin:20px 20px 0 0 ;
 	}
 
-	#editarArticulo input{
-		margin:10px;
+	#editarArticulo .titulotitulo{
+		margin: 0 auto;
 		padding:10px;
 		width:68%;
 	}
@@ -1019,9 +1020,9 @@ Tablets
 	}
 
 
-	#cabezote img{
-		width:40px;
-		height:40px;
+	#cabezote img {
+		/* width:40px;
+		height:40px; */
 	    display:inline;
 		margin:5px;
 	}
@@ -1126,8 +1127,8 @@ Tablets
 		margin:20px 20px 0 0 ;
 	}
 
-	#editarArticulo input{
-		margin:10px;
+	#editarArticulo .titulo {
+		margin: 10px;
 		padding:10px;
 		width:95%;
 	}
@@ -1367,8 +1368,8 @@ Phones
 		margin:20px 20px 0 0 ;
 	}
 
-	#editarArticulo input{
-		margin:10px;
+	#editarArticulo .titulo {
+		margin: 10px;
 		padding:10px;
 		width:90%;
 	}

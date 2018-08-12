@@ -27,7 +27,9 @@ ARTÍCULOS ADMINISTRABLE
 	<div id="agregarArtículo">
 
 		<form method="post" enctype="multipart/form-data" >
-		
+
+			<input name="accion" type="hidden" value="guardar" required>
+
 			<input name="titulo" type="text" placeholder="Título del Artículo" class="form-control" required>
 
 			<textarea name="introduccion" cols="30" rows="5" placeholder="Introducción del Articulo" class="form-control" maxlength="200" required></textarea>
@@ -64,6 +66,7 @@ ARTÍCULOS ADMINISTRABLE
 			$art = new GestorArticulosController();
 			$art -> mostrarArticulosController();
 			$art -> eliminarArticuloController();
+			$art -> editarArticuloController();
 		?>
 
 		<!-- <li>
@@ -84,7 +87,7 @@ ARTÍCULOS ADMINISTRABLE
 
 		<li>
 			<span>
-			<button class="btn btn-primary pull-right">Guardar</button>	
+				<button class="btn btn-primary pull-right">Guardar</button>	
 			</span>
 
 			<div id="editarImagen"><span class="fa fa-times"></span><img src="views/images/articulos/landscape03.jpg" class="img-thumbnail"></div>
@@ -101,7 +104,8 @@ ARTÍCULOS ADMINISTRABLE
 
 	</ul>
 
-	<button class="btn btn-warning pull-right" style="margin:10px 30px">Ordenar Artículos</button>
+	<button class="btn btn-warning pull-right ordenar-articulos" style="margin:10px 30px">Ordenar Artículos</button>
+	<button class="btn btn-primary pull-right guardar-orden" style="display: none; margin:10px 30px">Ordenar Artículos</button>
 
 </div>
 
@@ -111,7 +115,7 @@ ARTÍCULOS ADMINISTRABLE
 ARTÍCULO MODAL         
 ======================================-->
 
-<div id="articulo1" class="modal fade">
+<!-- <div id="articulo1" class="modal fade">
 
 		<div class="modal-dialog modal-content">
 
@@ -137,6 +141,6 @@ ARTÍCULO MODAL
 
 		</div>
 
-</div>
+</div> -->
 
 <!--====  Fin de ARTICULO MODAL ====-->

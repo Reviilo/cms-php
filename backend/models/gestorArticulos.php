@@ -53,14 +53,21 @@ class GestorArticulosModel {
     ## ACTUALIZAR IMAGEN SLIDE
     ##----------------------------------------------------------------
     public function editarArticuloModel ($datos, $tabla) {
+        if($datos["ruta"] === 'no-ruta') {
+           $sentencia = "UPDATE $tabla SET titulo = :titulo, introduccion = :introduccion, contenido = :contenido WHERE id = :id";
+        } else {
+            $sentencia = "UPDATE $tabla SET titulo = :titulo, introduccion = :introduccion, ruta = :ruta, contenido = :contenido WHERE id = :id";
+        }
 
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET titulo = :titulo, introduccion = :introduccion, ruta = :ruta, contenido = :contenido WHERE id = :id");
+        $stmt = Conexion::conectar()->prepare($sentencia);
 
         $stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
         $stmt -> bindParam(":titulo", $datos["titulo"], PDO::PARAM_STR);
         $stmt -> bindParam(":introduccion", $datos["intro"], PDO::PARAM_STR);
-        $stmt -> bindParam(":ruta", $datos["ruta"], PDO::PARAM_STR);
         $stmt -> bindParam(":contenido", $datos["contenido"], PDO::PARAM_STR);
+        if($datos["ruta"] !== 'no-ruta') {
+            $stmt -> bindParam(":ruta", $datos["ruta"], PDO::PARAM_STR);
+        }
 
 
         if ($stmt -> execute()) {
@@ -72,22 +79,9 @@ class GestorArticulosModel {
         $stmt -> close();
     }
 
-    
-
-    ## SELECCIONAR LA RUTA DE LA IMAGEN
-    ##----------------------------------------------------------------
-    public function mostrarImagenSlideModel ($ruta, $tabla) {
-        $stmt = Conexion::conectar()->prepare("SELECT id, ruta, titulo, descripcion FROM $tabla WHERE ruta = :ruta");
-
-        $stmt -> bindParam(":ruta", $ruta, PDO::PARAM_STR);
-        $stmt -> execute();
-        return $stmt -> fetch();
-        $stmt -> close();
-    }
-
     ## ACTUALIZAR ORDEN DE LA IMAGEN SLIDE
     ##----------------------------------------------------------------
-    public function ordenarArticuloModel ($datos, $tabla) {
+    public function actualizarOrdenArticuloModel ($datos, $tabla) {
 
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET orden = :orden WHERE id = :id");
 

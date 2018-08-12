@@ -12,6 +12,7 @@ if(alturaBody > 1020 && window.innerWidth > 767){
 	$("#col1").css({"height":alturaBody+"px"})
 }
 
+
 /*=====  Fin de ALTURA COL1  ======*/
 
 /*=============================================

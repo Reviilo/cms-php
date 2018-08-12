@@ -8,7 +8,12 @@
 
 	<ul>
 
-		<li class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<?php 
+			$articulos = new Articulos();
+			$articulos -> mostrarArticulosController();
+		?>
+
+		<!-- <li class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
 			<img src="views/images/articulos/landscape01.jpg" class="img-thumbnail">
 			<h1>Lorem Ipsum</h1>
@@ -58,7 +63,7 @@
 
 			<hr>
 
-		</li>
+		</li> -->
 
 	</ul>
 

@@ -24,7 +24,7 @@ class GestorArticulosController {
 
     }
 
-    ## Crear imagen temporal para mostrar en el articulo cuando se crea
+    ## Crear imagen temporal para mostrar en el articulo
     ##----------------------------------------------------------------
     public function mostrarImagenController ($datos) {
 
@@ -50,7 +50,7 @@ class GestorArticulosController {
     ## Guardar el articulo en la base de datos
     ##----------------------------------------------------------------
     public function guardarArticuloController () {
-        if (isset( $_POST["titulo"] )) {
+        if (isset( $_POST["accion"] ) && $_POST["accion"] === 'guardar' ) {
 
             $image = $_FILES["imagen"]["tmp_name"];
             $imgType = explode("/", $_FILES["imagen"]["type"]);
@@ -58,7 +58,7 @@ class GestorArticulosController {
             
             $random = mt_rand(100, 999);
             $rutaCrear = "views/images/articulos/articulo".$random.".".$imgType;
-            $this -> crearImagen($imgType, $image, $rutaCrear);
+            self::crearImagen($imgType, $image, $rutaCrear);
             
             $titulo = Test::test_input($_POST["titulo"]);
             $intro = Test::test_input($_POST["introduccion"]).'...';
@@ -102,72 +102,53 @@ class GestorArticulosController {
         $res = GestorArticulosModel::mostrarArticulosModel("articulos");
 
         foreach ($res as $row => $item) {
-            echo '<li id="'.$item["id"].'">
-                    <span>
+            echo '<li id="'.$item["id"].'" class="bloque-articulo">
+                    <span class="handle-article">
                         <a href="index.php?action=articulos&id='.$item["id"].'&ruta='.$item["ruta"].'"><i class="fa fa-times btn btn-danger eliminar-articulo"></i></a>
                         <i class="fa fa-pencil btn btn-primary editar-articulo"></i>	
                     </span>
                     <img src="'.$item["ruta"].'" class="img-thumbnail">
                     <h1>'.$item["titulo"].'</h1>
                     <p>'.$item["introduccion"].'</p>
+                    <input class="contenido" type="hidden" value="'.$item["contenido"].'" />
                     <a href="#articulo'.$item["id"].'" data-toggle="modal">
                         <button class="btn btn-default">Leer Más</button>
                     </a>
 
                     <hr>
 
-                </li>
                 
-                <div id="articulo'.$item["id"].'" class="modal fade">
+                
+                    <div id="articulo'.$item["id"].'" class="modal fade">
 
-                    <div class="modal-dialog modal-content">
+                        <div class="modal-dialog modal-content">
 
-                        <div class="modal-header" style="border:1px solid #eee">
-                        
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title">'.$item["titulo"].'</h3>
-                        
-                        </div>
-
-                        <div class="modal-body" style="border:1px solid #eee">
-                        
-                            <img src="'.$item["ruta"].'" width="100%" style="margin-bottom:20px">
-                            <p class="parrafoContenido">'.$item["contenido"].'</p>
-                                
-                        </div>
-
-                        <div class="modal-footer" style="border:1px solid #eee">
+                            <div class="modal-header" style="border:1px solid #eee">
                             
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="modal-title">'.$item["titulo"].'</h3>
+                            
+                            </div>
+
+                            <div class="modal-body" style="border:1px solid #eee">
+                            
+                                <img src="'.$item["ruta"].'" width="100%" style="margin-bottom:20px">
+                                <p class="parrafoContenido">'.$item["contenido"].'</p>
+                                    
+                            </div>
+
+                            <div class="modal-footer" style="border:1px solid #eee">
+                                
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                            </div>
+
                         </div>
 
                     </div>
-
-                </div>';
+                </li>';
         }
 
-    }
-
-    // ## 
-    // ##----------------------------------------------------------------
-    // public function editarArticuloController ($datos) {
-    
-    //     $res = GestorArticulosModel::editarArticuloModel($datos, "articulos");
-        
-    //     echo $res;
-
-    // }
-
-    ## Eliminar Articulo
-    ##----------------------------------------------------------------
-    public function eliminarArticuloController2 ($datos) {
-
-        // $res = GestorArticulosModel::eliminarArticuloModel($datos["id"], "articulos");
-        $res = GestorArticulosModel::prueba();
-        // unlink($datos["ruta"]);
-        
-        echo $res;
     }
 
     public function eliminarArticuloController () {
@@ -200,6 +181,71 @@ class GestorArticulosController {
         
     }
 
+    ## Actualizar el articulo
+    ##----------------------------------------------------------------
+    public function editarArticuloController () {
+
+        if (isset( $_POST["accion"] ) && $_POST["accion"] === 'editar' ) {
+
+            if($_FILES["imagen"]) {
+                $image = $_FILES["imagen"]["tmp_name"];
+                $imgType = explode("/", $_FILES["imagen"]["type"]);
+                $imgType = $imgType[1];
+                
+                $random = mt_rand(100, 999);
+                $rutaCrear = "views/images/articulos/articulo".$random.".".$imgType;
+                self::crearImagen($imgType, $image, $rutaCrear);
+
+                $rutaAcceso = "views/images/articulos/articulo".$random.".".$imgType;
+
+                $imgsTemp = glob("views/images/articulos/temp/*");
+                foreach ($imgsTemp as $file) {
+                    unlink($file);
+                }
+            }
+            
+            $id = Test::test_input($_POST["id"]);
+            $titulo = Test::test_input($_POST["titulo"]);
+            $intro = Test::test_input($_POST["intro"]).'...';
+            $contenido = Test::test_input($_POST["contenido"]);            
+
+            $datos = array("id" => $id,
+                            "titulo" => $titulo, 
+                           "intro" => $intro,
+                           "ruta" => $rutaAcceso ? $rutaAcceso : 'no-ruta',
+                           "contenido" => $contenido);
+
+                        //    var_dump($datos);
+
+            $res = GestorArticulosModel::editarArticuloModel($datos, "articulos");
+
+            if ($res === 'success') {
+                echo '<script>
+                swal({
+                    title: "OK!",
+                    text: "El articulo ha sido creado correctamente!",
+                    type: "success",
+                    confirmButtonText: "Cerrar",
+                    onClose: () => {
+                        window.location = "articulos";
+                    }
+                });
+                </script> ';
+            } else {
+                echo 'error';
+            }
+        }
+
+    }
     
+    ## Actualizar el articulo
+    ##----------------------------------------------------------------
+    public function actualizarOrdenArticuloController ($datos) {
+        $res = GestorArticulosModel::actualizarOrdenArticuloModel($datos, "articulos");
+
+        echo $res;
+    }
+
+
     
 }
