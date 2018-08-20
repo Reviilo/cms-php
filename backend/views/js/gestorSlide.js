@@ -226,7 +226,7 @@ $('.editar-slide').on('click', function() {
 });
 
 /**
- * Editar una imagen del slide
+ * Funcion para ordenar los slides
  */
 
 function sortableOn () {

@@ -377,7 +377,8 @@ GALERÍA
 #galeria ul{
 	margin:20px;
 	padding: 0px 10px;
-	height:auto;
+	/* height:auto; */
+	min-height: 100px;
 	border:2px dashed #999;
 }
 
@@ -398,6 +399,7 @@ GALERÍA
 
 #galeria ul li img{
 	position:relative;
+	width: 100%
 }
 
 /*=====  Fin de GALERÍA ======*/
@@ -715,7 +717,6 @@ ESCRITORIO GRANDE
 	#galeria ul li{
 		position: relative;
 		width:150px;
-		height:150px;
 		overflow:hidden;
 		display:inline-block;
 		margin:10px 18.3px;
@@ -947,7 +948,6 @@ ESCRITORIO MEDIANO
 	#galeria ul li{
 		position: relative;
 		width:150px;
-		height:150px;
 		overflow:hidden;
 		display:inline-block;
 		margin:10px 20.4px;
@@ -1178,7 +1178,6 @@ Tablets
 	#galeria ul li{
 		position: relative;
 		width:150px;
-		height:150px;
 		overflow:hidden;
 		display:inline-block;
 		margin:10px 6.8px;
@@ -1418,12 +1417,12 @@ Phones
 
 	#galeria ul{
 		text-align: center;
+		min-height: 100px;
 	}
 
 	#galeria ul li{
 		position: relative;
 		width:150px;
-		height:150px;
 		overflow:hidden;
 		display:inline-block;
 		margin:10px auto;
