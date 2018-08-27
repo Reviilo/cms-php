@@ -44,7 +44,7 @@ class GestorGaleriaModel {
 
     ## Eliminar la imagen
     ##----------------------------------------------------------------
-    public function eliminarImagenModel ($id, $tabla) {
+    public function eliminarVideo ($id, $tabla) {
         $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
         $stmt -> bindParam(":id", $id, PDO::PARAM_INT);

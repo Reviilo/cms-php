@@ -20,16 +20,24 @@ VIDEOS ADMINISTRABLE
 
 <div id="videos" class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
 
-<form method="post" action="validarVideo.php" enctype="multipart/form-data">
+<p>Solo subir archivos mp4 y que no excedan 50MB</p>
 
-	 	<input type="file" name="video" class="btn btn-default">
+<form method="post" enctype="multipart/form-data">
+
+	 	<input type="file" name="video" id="video" class="btn btn-default" required>
 	
-	<input type="button" value="Subir Video" class="btn btn-info">
+	<input type="submit" value="Subir Video" class="btn btn-info">
 
 </form>
 
 <ul id="galeriaVideo">
-	<li>
+
+	<?php 
+		$videos = new GestorVideosController();
+		$videos -> mostrarVideosController();
+	?>
+
+	<!-- <li>
 		<span class="fa fa-times"></span>
 		<video controls>
 			<source src="views/videos/video01.mp4" type="video/mp4">
@@ -55,7 +63,7 @@ VIDEOS ADMINISTRABLE
 		<video controls>
 			<source src="views/videos/video04.mp4" type="video/mp4">
 			</video>	
-	</li>
+	</li> -->
 
 </ul>
 

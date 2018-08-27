@@ -431,6 +431,7 @@ VIDEOS
 	padding: 0px 10px;
 	height:auto;
 	border:2px dashed #999;
+	min-height: 100px;
 }
 
 #galeriaVideo li video{

@@ -149,18 +149,7 @@ $('.eliminar-foto').on('click', function () {
         data: datos,
         cache: false,
         contentType: false,
-        processData: false,
-        // success: function(res) {
-        //     console.log(res);
-        //     if (res === 'success') {
-        //         swal({
-        //             title: "OK!",
-        //             text: "El articulo ha eliminado correctamente!",
-        //             type: "success",
-        //             timer: 2000
-        //         });
-        //     }
-        // }
+        processData: false
     });
 
 
